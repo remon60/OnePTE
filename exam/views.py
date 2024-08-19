@@ -5,14 +5,13 @@ import random
 
 
 class QuestionListView(generics.ListAPIView):
-    queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
     def get_queryset(self):
         question_type = self.request.query_params.get('type')
         if question_type:
-            return self.queryset.filter(type=question_type)
-        return self.queryset
+            return Question.objects.filter(type=question_type)
+        return Question.objects.all()
 
 
 class QuestionDetailView(generics.RetrieveAPIView):
@@ -27,42 +26,37 @@ class SubmissionCreateView(generics.CreateAPIView):
         submission = serializer.save()
         
         if submission.question.type == 'SST':
-            submission.score = {
+            scores = {
                 "Content": random.randint(0, 2),
                 "Form": random.randint(0, 2),
                 "Grammar": random.randint(0, 2),
                 "Vocabulary": random.randint(0, 2),
                 "Spelling": random.randint(0, 2),
             }
-            # Calculate total score
-            submission.total_score = sum(submission.score.values())
+            submission.score = sum(scores.values())
         elif submission.question.type == 'RO':
-            correct_order = ['1', '2', '3', '4']  # Replace with the actual correct order
+            correct_order = ['1', '2', '3', '4']
             user_order = submission.ordered_paragraphs.split(',')
 
             correct_pairs = [(correct_order[i], correct_order[i + 1]) for i in range(len(correct_order) - 1)]
             user_pairs = [(user_order[i], user_order[i + 1]) for i in range(len(user_order) - 1)]
             
-            submission.score = {
+            scores = {
                 "CorrectPairs": sum([1 for pair in user_pairs if pair in correct_pairs])
             }
-
-            # The total score is the number of correctly ordered pairs
-            submission.total_score = submission.score["CorrectPairs"]
+            submission.score = scores["CorrectPairs"]
         elif submission.question.type == 'RMMCQ':
-            correct_options = ['A', 'C']  # Replace with the actual correct options
+            correct_options = ['A', 'C'] 
             user_options = submission.selected_options.split(',')
 
-            score = 0
+            scores = 0
             for option in user_options:
                 if option in correct_options:
-                    score += 1
+                    scores += 1
                 else:
-                    score -= 1
+                    scores -= 1
             
-            # Ensure the minimum score is 0
-            submission.total_score = max(0, score)
-            submission.score = {"ChoiceScore": submission.total_score}
+            submission.score = max(0, scores)
 
         submission.save()
 
@@ -78,6 +72,7 @@ class PracticeHistoryView(generics.ListAPIView):
         if question_type:
             queryset = queryset.filter(question__type=question_type)
         return queryset
+
 
 
 

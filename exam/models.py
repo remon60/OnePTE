@@ -11,7 +11,7 @@ class Question(models.Model):
     title = models.CharField(max_length=255)
 
 class Audio(models.Model):
-    question = models.ForeignKey(Question, related_name='audios', on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, related_name='audios', on_delete=models.CASCADE, unique=True)
     speaker = models.CharField(max_length=100)
     audio_file = models.FileField(upload_to='audios/')
 
@@ -23,6 +23,7 @@ class Option(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
     content = models.CharField(max_length=255)
     is_correct = models.BooleanField(default=False)
+    correct_order=models.IntegerField(default=0)
 
 class Submission(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
