@@ -9,7 +9,7 @@ This project is a simplified implementation of OnePTE, designed to provide basic
 
 ## API Testing with Postman
 
-One can use Postman to test the functionality of the APIs. Follow the steps below:
+You can use Postman to test the functionality of the APIs. Follow the steps below:
 
 ### 1. Base URL
 
@@ -34,7 +34,7 @@ One can use Postman to test the functionality of the APIs. Follow the steps belo
 - **URL**: `POST /submit/`
 - **Description**: Submits an answer for a specific question type.
 
-#### 1. **Summarize Spoken Text (SST)**
+##### 1. **Summarize Spoken Text (SST)**
    - **Request**
      - **Method**: POST
      - **URL**: `http://127.0.0.1:8000/submit/`
@@ -49,7 +49,7 @@ One can use Postman to test the functionality of the APIs. Follow the steps belo
        }
        ```
 
-#### 2. **Re-Order Paragraph (RO)**
+##### 2. **Re-Order Paragraph (RO)**
    - **Request**
      - **Method**: POST
      - **URL**: `http://127.0.0.1:8000/submit/`
@@ -64,7 +64,7 @@ One can use Postman to test the functionality of the APIs. Follow the steps belo
        }
        ```
 
-#### 3. **Reading Multiple Choice (Multiple) (RMMCQ)**
+##### 3. **Reading Multiple Choice (Multiple) (RMMCQ)**
    - **Request**
      - **Method**: POST
      - **URL**: `http://127.0.0.1:8000/submit/`
@@ -115,4 +115,3 @@ The Django admin panel allows you to manage your data easily.
 - **View Data**: Click on any existing data entry to view its details.
 - **Edit Data**: Open any data entry, make changes, and save.
 - **Delete Data**: Select one or more entries and use the "Delete" action.
-
