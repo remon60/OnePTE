@@ -31,18 +31,60 @@ One can use Postman to test the functionality of the APIs. Follow the steps belo
 
 #### Submit Answer
 
-- **URL**: `POST /submissions/`
+- **URL**: `POST /submit/`
 - **Description**: Submits an answer for a specific question type.
-- **Body**: Provide the `question_id` and your `answer` in the request body.
-- **Example**:
-    - **Content-Type**: `application/json`
-    - **Request Body**:
-      ```json
-      {
-        "question_id": 1,
-        "answer": "This is a sample answer."
-      }
-      ```
+
+#### 1. **Summarize Spoken Text (SST)**
+   - **Request**
+     - **Method**: POST
+     - **URL**: `http://127.0.0.1:8000/submit/`
+     - **Headers**:
+       - `Content-Type`: `application/json`
+     - **Body**:
+       ```json
+       {
+           "question": 1,
+           "user_id": 101,
+           "answer_text": "This is the summary of the spoken text."
+       }
+       ```
+
+#### 2. **Re-Order Paragraph (RO)**
+   - **Request**
+     - **Method**: POST
+     - **URL**: `http://127.0.0.1:8000/submit/`
+     - **Headers**:
+       - `Content-Type`: `application/json`
+     - **Body**:
+       ```json
+       {
+           "question": 2,
+           "user_id": 101,
+           "ordered_paragraphs": "3,1,2,4"
+       }
+       ```
+
+#### 3. **Reading Multiple Choice (Multiple) (RMMCQ)**
+   - **Request**
+     - **Method**: POST
+     - **URL**: `http://127.0.0.1:8000/submit/`
+     - **Headers**:
+       - `Content-Type`: `application/json`
+     - **Body**:
+       ```json
+       {
+           "question": 3,
+           "user_id": 101,
+           "selected_options": "1,3,4"
+       }
+       ```
+
+#### Explanation:
+- **question**: The ID of the question being answered.
+- **user_id**: The ID of the user submitting the answer.
+- **answer_text**: For SST questions, this is the text-based summary.
+- **ordered_paragraphs**: For RO questions, this is a comma-separated string representing the order of paragraphs.
+- **selected_options**: For RMMCQ questions, this is a comma-separated string of the selected options.
 
 #### Practice History
 
